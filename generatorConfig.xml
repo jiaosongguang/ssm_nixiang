@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--批量插入引入-->
+        <plugin type="plugins.BatchInsertPlugin"></plugin>
+
+        <!-- 自动为entity生成swagger2文档-->
+        <plugin type="plugins.GeneratorSwagger2DocA">
+            <property name="apiModelAnnotationPackage" value="io.swagger.annotations.ApiModel"/>
+            <property name="apiModelPropertyAnnotationPackage" value="io.swagger.annotations.ApiModelProperty"/>
+        </plugin>
+        <!-- Example 目标包修改插件 -->
+        <!--        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">-->
+        <!--            <property name="targetPackage" value="com.yao.dataforsea_bg.db.dao.example"/>-->
+        <!--        </plugin>-->
+        <!-- Lombok插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.LombokPlugin">
+            <!-- @Data 默认开启,同时插件会对子类自动附加@EqualsAndHashCode(callSuper = true)，@ToString(callSuper = true) -->
+            <property name="@Data" value="false"/>
+            <!-- @Builder 必须在 Lombok 版本 >= 1.18.2 的情况下开启，对存在继承关系的类自动替换成@SuperBuilder -->
+            <property name="@Builder" value="false"/>
+            <!-- @NoArgsConstructor 和 @AllArgsConstructor 使用规则和Lombok一致 -->
+            <property name="@AllArgsConstructor" value="false"/>
+            <property name="@NoArgsConstructor" value="false"/>
+            <!-- @Getter、@Setter、@Accessors 等使用规则参见官方文档 -->
+            <property name="@Accessors(chain = true)" value="false"/>
+            <!-- 临时解决IDEA工具对@SuperBuilder的不支持问题，开启后(默认未开启)插件在遇到@SuperBuilder注解时会调用ModelBuilderPlugin来生成相应的builder代码 -->
+            <property name="supportSuperBuilderForIdea" value="false"/>
+        </plugin>
+        <!-- Example Criteria 增强插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin">-->
+<!--            &lt;!&ndash; 是否支持已经过时的andIf方法（推荐使用when代替），默认支持 &ndash;&gt;-->
+<!--            <property name="enableAndIf" value="true"/>-->
+<!--        </plugin>-->
+        <!-- Mapper注解插件 -->
+<!--        <plugin type="com.itfsw.mybatis.generator.plugins.MapperAnnotationPlugin">-->
+<!--            &lt;!&ndash; @Mapper 默认开启 &ndash;&gt;-->
+<!--            <property name="@Mapper" value="true"/>-->
+<!--            &lt;!&ndash; @Repository 默认关闭，开启后解决IDEA工具@Autowired报错 &ndash;&gt;-->
+<!--            <property name="@Repository" value="true"/>-->
+<!--        </plugin>-->
+
+        <!--注释生成-->
+        <commentGenerator type="config.MybatisCommentGenerator">
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <!--            <property name="suppressDate" value="true"/>-->
+            <!--            <property name="suppressAllComments" value="false" />-->
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://172.17.73.146:8306/catalog_manager?useSSL=false" userId="root"
+                        password="Tusdao@mysql2019*">
+        </jdbcConnection>
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
+        <javaModelGenerator targetPackage="com.tusdao.catalogmanager.model"
+                            targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- targetProject:mapper映射文件生成的位置 -->
+        <sqlMapGenerator targetPackage="com.tusdao.catalogmanager.mapper"
+                         targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.tusdao.catalogmanager.dao"
+                             targetProject=".\src\main\java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!-- 指定数据库表 -->
+
+        <table schema="" tableName="database_manager_table">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
+
+    </context>
+</generatorConfiguration>
+
